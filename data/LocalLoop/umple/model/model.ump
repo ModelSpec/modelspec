@@ -1,0 +1,150 @@
+class Event {
+  String eventId;
+  String organizerId;
+  String name;
+  String description;
+  String categoryId;
+  double fee;
+  long eventStart;
+  long eventEnd;
+  int capacity;
+  * -- 1 Category;
+}
+
+class Category {
+  String categoryId;
+  String name;
+  String description;
+}
+
+class Registration {
+  String registrationId;
+  String eventId;
+  String participantId;
+  String organizerId;
+  String status;
+  long timestamp;
+  * -- 1 Event;
+  * -- 1 Participant;
+}
+
+class RegistrationForm {
+  String firstName;
+  String lastName;
+  String username;
+  String email;
+  String phone;
+  String password;
+  String confirmPassword;
+  boolean isOrganizer;
+  String companyName;
+}
+
+class UserAccount {
+  String userID;
+  String firstName;
+  String lastName;
+  String username;
+  String email;
+  String phoneNumber;
+  Role role;
+}
+
+class Role {
+  abstract;
+}
+
+class Admin {
+  isA Role;
+}
+
+class Organizer {
+  isA Role;
+  String companyName;
+  1 -- * Event;
+}
+
+class Participant {
+  isA Role;
+}
+
+class EventRepository {
+  1 -- * Event;
+}
+
+class RegistrationRepository {
+  1 -- * Registration;
+}
+
+class AdminViewModel {
+  1 -- * UserAccount;
+}
+
+class OrganizerViewModel {
+  EventRepository eventRepo;
+  0..1 -- 1 EventRepository;
+}
+
+class RegistrationViewModel {
+  Registration[] pendingRegistrations;
+  0..1 -- 1 RegistrationRepository repository;
+}
+
+class ParticipantViewModel {
+}
+
+class CategoryViewModel {
+  1 -- * Category;
+}
+
+class LoginService {
+}
+
+class AppCompatActivity {
+}
+
+class AdminDashboardActivity {
+  isA AppCompatActivity;
+  1 -- 0..1 AdminViewModel;
+}
+
+class OrganizerDashboardActivity {
+  isA AppCompatActivity;
+  1 -- 0..1 OrganizerViewModel;
+  1 -- 0..1 RegistrationViewModel;
+}
+
+class ParticipantDashboardActivity {
+  isA AppCompatActivity;
+  1 -- 0..1 ParticipantViewModel;
+}
+
+class ManageCategoriesActivity {
+  isA AppCompatActivity;
+  1 -- 0..1 CategoryViewModel;
+}
+
+class ManageEventActivity {
+  isA AppCompatActivity;
+  boolean isEditMode;
+  Event eventToEdit;
+  String organizerId;
+  String selectedCategoryId;
+  Category[] categoryList;
+  1 -- 0..1 OrganizerViewModel;
+  1 -- 0..1 CategoryViewModel;
+}
+
+class CreateAccountActivity {
+  isA AppCompatActivity;
+  1 -- 1 RegistrationForm;
+}
+
+class LoginActivity {
+  isA AppCompatActivity;
+  1 -- 0..1 LoginService;
+}
+
+class MainActivity {
+  isA AppCompatActivity;
+}

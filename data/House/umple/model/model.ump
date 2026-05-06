@@ -1,0 +1,69 @@
+class ConcreteBasement {
+  isA Basement;
+  Double Quality;
+}
+
+class Basement {
+  abstract;
+  Double Size;
+  String Name;
+}
+
+class EarthBasement {
+  isA Basement;
+  Double Humidity;
+}
+
+class SemiDetached {
+  abstract;
+  isA House;
+  Boolean Garden;
+  int Windows;
+}
+
+class House {
+  enum BMType { WOOD, BRICK, CONCRETE }
+  String Address;
+  BMType BuildingMaterial;
+}
+
+class JobLog {
+  int Hours;
+  Double Price;
+  * -- 1 House;
+  * -- 1 Company;
+}
+
+class SemiDetachedWithCarport {
+  isA SemiDetached;
+}
+
+class SemiDetachedWithGarage {
+  isA SemiDetached;
+}
+
+class Company {
+  String Name;
+  String Address;
+}
+
+class Carport {
+  Boolean DoublePort;
+  Boolean flatRoof;
+}
+
+class Garage {
+  Boolean Automatic;
+}
+
+association {
+  0..1 Basement -- 1 House house;
+}
+
+association {
+  1 SemiDetachedWithCarport -- 2 Carport;
+}
+
+association {
+  1 SemiDetachedWithGarage -- 1 Garage;
+}

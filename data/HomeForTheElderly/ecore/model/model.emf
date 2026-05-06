@@ -1,0 +1,79 @@
+package homeForTheElderly;
+
+class HomeForTheElderly {
+  ref Department[*]#homeForTheElderly departments;
+  ref Person[*]#homeForTheElderly people;
+}
+
+class Department {
+  id attr String ~id;
+  ref Room[*]#department rooms;
+  ref HomeForTheElderly[1]#department homeForTheElderly;
+}
+
+class Category {
+  attr double price;
+  attr String type;
+  ref Room[*]#category rooms;
+}
+
+class Room {
+  attr int roomNumber;
+  ref Bed[*]#room beds;
+  ref Department[1]#room department;
+  ref Category[1]#room category;
+}
+
+class Bed {
+  attr int bedNumber;
+  ref Person[0..1]#bed person;
+  ref Stay[*]#bed staies;
+  ref Room[1]#bed room;
+  ref Proposal[*]#bed proposals;
+}
+
+class Proposal {
+  attr String status;
+  attr boolean validated;
+  ref Bed[1]#proposal bed;
+  ref Person[1]#proposal person;
+}
+
+class Stay {
+  attr EDate intakeDate;
+  attr EDate endDate;
+  ref Person[1]#stay person;
+  ref Bed[1]#stay bed;
+  ref InvoiceItem[*]#stay invoiceItems;
+}
+
+class Person {
+  id attr String ~id;
+  attr String name;
+  attr EDate birthdate;
+  attr EDate registrationDate;
+  attr String abilities;
+  ref Stay[*]#person staies;
+  ref Invoice[*]#person invoices;
+  ref Bed[0..1]#person bed;
+  ref Proposal[*]#person proposals;
+  ref HomeForTheElderly[1]#person homeForTheElderly;
+}
+
+class Invoice {
+  attr EDate invoiceDate;
+  attr double outstandingAmount;
+  attr String status;
+  ref Person[1]#invoice person;
+  ref InvoiceLine[*]#invoice invoiceLines;
+}
+
+class InvoiceItem {
+  ref InvoiceLine[0..1]#invoiceItem invoiceLine;
+  ref Stay[1]#invoiceItem stay;
+}
+
+class InvoiceLine {
+  ref Invoice[1]#invoiceLine invoice;
+  ref InvoiceItem[1]#invoiceLine invoiceItem;
+}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="homeForTheElderly" nsURI="homeForTheElderly" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="HomeForTheElderly">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="departments" upperBound="-1"
+        eType="#//Department" eOpposite="#//Department/homeForTheElderly"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="people" upperBound="-1"
+        eType="#//Person" eOpposite="#//Person/homeForTheElderly"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Department">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rooms" upperBound="-1"
+        eType="#//Room" eOpposite="#//Room/department"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="homeForTheElderly" lowerBound="1"
+        eType="#//HomeForTheElderly"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Category">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="price" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rooms" upperBound="-1"
+        eType="#//Room" eOpposite="#//Room/category"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Room">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="roomNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="beds" upperBound="-1" eType="#//Bed"
+        eOpposite="#//Bed/room"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="department" lowerBound="1"
+        eType="#//Department"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="category" lowerBound="1"
+        eType="#//Category"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bed">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bedNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="person" eType="#//Person"
+        eOpposite="#//Person/bed"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staies" upperBound="-1"
+        eType="#//Stay" eOpposite="#//Stay/bed"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="room" lowerBound="1" eType="#//Room"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="proposals" upperBound="-1"
+        eType="#//Proposal" eOpposite="#//Proposal/bed"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Proposal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="validated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bed" lowerBound="1" eType="#//Bed"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="person" lowerBound="1"
+        eType="#//Person"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Stay">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="intakeDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="person" lowerBound="1"
+        eType="#//Person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bed" lowerBound="1" eType="#//Bed"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="invoiceItems" upperBound="-1"
+        eType="#//InvoiceItem" eOpposite="#//InvoiceItem/stay"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Person">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="birthdate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="registrationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="abilities" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="staies" upperBound="-1"
+        eType="#//Stay" eOpposite="#//Stay/person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="invoices" upperBound="-1"
+        eType="#//Invoice" eOpposite="#//Invoice/person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bed" eType="#//Bed" eOpposite="#//Bed/person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="proposals" upperBound="-1"
+        eType="#//Proposal" eOpposite="#//Proposal/person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="homeForTheElderly" lowerBound="1"
+        eType="#//HomeForTheElderly"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Invoice">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="invoiceDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outstandingAmount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="person" lowerBound="1"
+        eType="#//Person"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="invoiceLines" upperBound="-1"
+        eType="#//InvoiceLine" eOpposite="#//InvoiceLine/invoice"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InvoiceItem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="invoiceLine" eType="#//InvoiceLine"
+        eOpposite="#//InvoiceLine/invoiceItem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stay" lowerBound="1" eType="#//Stay"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InvoiceLine">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="invoice" lowerBound="1"
+        eType="#//Invoice"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="invoiceItem" lowerBound="1"
+        eType="#//InvoiceItem" eOpposite="#//InvoiceItem/invoiceLine"/>
+  </eClassifiers>
+</ecore:EPackage>

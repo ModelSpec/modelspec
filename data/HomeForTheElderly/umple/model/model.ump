@@ -1,0 +1,91 @@
+class HomeForTheElderly {
+  1 <@>- * Department departments;
+  1 <@>- * Person people;
+}
+
+class Department {
+  unique String id;
+}
+
+class Category {
+  double price;
+  String type;
+}
+
+class Room {
+  int roomNumber;
+}
+
+class Bed {
+  int bedNumber;
+}
+
+associationClass Proposal {
+  String status;
+  boolean validated;
+  * Bed;
+  * Person;
+}
+
+class Stay {
+  Date intakeDate;
+  Date endDate;
+}
+
+class Person {
+  unique String id;
+  String name;
+  Date birthdate;
+  lazy Date registrationDate;
+  lazy String abilities;
+}
+
+class Invoice {
+  Date invoiceDate;
+  double outstandingAmount;
+  String status;
+}
+
+class InvoiceItem {}
+
+class InvoiceLine {}
+
+association {
+  1 Department -- * Room;
+}
+
+association {
+  1 Category -- * Room;
+}
+
+association {
+  1 Room -- * Bed;
+}
+
+association {
+  0..1 Bed -- 0..1 Person;
+}
+
+association {
+  1 Person -- * Stay;
+}
+
+association {
+  1 Bed -- * Stay;
+}
+
+association {
+  1 Person -- * Invoice;
+}
+
+association {
+  1 Invoice -- * InvoiceLine;
+}
+
+association {
+  1 InvoiceItem -- 0..1 InvoiceLine;
+}
+
+association {
+  1 Stay -- * InvoiceItem;
+}

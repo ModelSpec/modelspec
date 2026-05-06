@@ -1,0 +1,65 @@
+package House;
+
+abstract class Basement {
+  attr double size;
+  attr String name;
+  ref House[1]#basement house;
+}
+
+class ConcreteBasement extends Basement {
+  attr double quality;
+}
+
+class EarthBasement extends Basement {
+  attr double humidity;
+}
+
+class House {
+  attr String address;
+  attr BMType buildingMaterial;
+  ref Basement[0..1]#house basement;
+  ref JobLog[*]#house jobLogs;
+}
+
+abstract class SemiDetached extends House {
+  attr boolean garden;
+  attr int windows;
+}
+
+class SemiDetachedWithCarport extends SemiDetached {
+  ref Carport[2]#semiDetachedWithCarport carports;
+}
+
+class SemiDetachedWithGarage extends SemiDetached {
+  ref Garage[1]#semiDetachedWithGarage garage;
+}
+
+class Carport {
+  attr boolean doublePort;
+  attr boolean flatRoof;
+  ref SemiDetachedWithCarport[1]#carports semiDetachedWithCarport;
+}
+
+class Garage {
+  attr boolean automatic;
+  ref SemiDetachedWithGarage[1]#garage semiDetachedWithGarage;
+}
+
+class Company {
+  attr String name;
+  attr String address;
+  ref JobLog[*]#company jobLogs;
+}
+
+class JobLog {
+  attr int hours;
+  attr double price;
+  ref House[1]#jobLogs house;
+  ref Company[1]#jobLogs company;
+}
+
+enum BMType {
+  WOOD;
+  BRICK;
+  CONCRETE;
+}

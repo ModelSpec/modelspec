@@ -1,0 +1,159 @@
+package localLoop;
+
+class Event {
+  attr String eventId;
+  attr String organizerId;
+  attr String name;
+  attr String description;
+  attr String categoryId;
+  attr double fee;
+  attr long eventStart;
+  attr long eventEnd;
+  attr int capacity;
+  ref Category[1]#event category;
+  ref Registration[*]#event registrations;
+  ref Organizer[1]#event organizer;
+  ref EventRepository[1]#event eventRepository;
+}
+
+class Category {
+  attr String categoryId;
+  attr String name;
+  attr String description;
+  ref Event[*]#category events;
+  ref CategoryViewModel[1]#category categoryViewModel;
+}
+
+class Registration {
+  attr String registrationId;
+  attr String eventId;
+  attr String participantId;
+  attr String organizerId;
+  attr String status;
+  attr long timestamp;
+  ref Event[1]#registration event;
+  ref Participant[1]#registration participant;
+  ref RegistrationRepository[1]#registration registrationRepository;
+}
+
+class RegistrationForm {
+  attr String firstName;
+  attr String lastName;
+  attr String username;
+  attr String email;
+  attr String phone;
+  attr String password;
+  attr String confirmPassword;
+  attr boolean isOrganizer;
+  attr String companyName;
+  ref CreateAccountActivity[1]#registrationForm createAccountActivity;
+}
+
+class UserAccount {
+  attr String userID;
+  attr String firstName;
+  attr String lastName;
+  attr String username;
+  attr String email;
+  attr String phoneNumber;
+  ref Role[1] role;
+  ref AdminViewModel[1]#userAccount adminViewModel;
+}
+
+abstract class Role {
+}
+
+class Admin extends Role {
+}
+
+class Organizer extends Role {
+  attr String companyName;
+  ref Event[*]#organizer events;
+}
+
+class Participant extends Role {
+  ref Registration[*]#participant registrations;
+}
+
+class EventRepository {
+  ref Event[*]#eventRepository events;
+  ref OrganizerViewModel[0..1]#eventRepository organizerViewModel;
+}
+
+class RegistrationRepository {
+  ref Registration[*]#registrationRepository registrations;
+  ref RegistrationViewModel[0..1]#registrationRepository registrationViewModel;
+}
+
+class AdminViewModel {
+  ref UserAccount[*]#adminViewModel userAccounts;
+  ref AdminDashboardActivity[1]#adminViewModel adminDashboardActivity;
+}
+
+class OrganizerViewModel {
+  ref EventRepository[1] eventRepo;
+  ref EventRepository[1]#organizerViewModel eventRepository;
+  ref OrganizerDashboardActivity[1]#organizerViewModel organizerDashboardActivity;
+  ref ManageEventActivity[1]#organizerViewModel manageEventActivity;
+}
+
+class RegistrationViewModel {
+  ref Registration[*] pendingRegistrations;
+  ref RegistrationRepository[1]#registrationViewModel repository;
+  ref OrganizerDashboardActivity[1]#registrationViewModel organizerDashboardActivity;
+}
+
+class ParticipantViewModel {
+  ref ParticipantDashboardActivity[1]#participantViewModel participantDashboardActivity;
+}
+
+class CategoryViewModel {
+  ref Category[*]#categoryViewModel categories;
+  ref ManageCategoriesActivity[1]#categoryViewModel manageCategoriesActivity;
+  ref ManageEventActivity[1]#categoryViewModel manageEventActivity;
+}
+
+class LoginService {
+  ref LoginActivity[1]#loginService loginActivity;
+}
+
+class AppCompatActivity {
+}
+
+class AdminDashboardActivity extends AppCompatActivity {
+  ref AdminViewModel[0..1]#adminDashboardActivity adminViewModel;
+}
+
+class OrganizerDashboardActivity extends AppCompatActivity {
+  ref OrganizerViewModel[0..1]#organizerDashboardActivity organizerViewModel;
+  ref RegistrationViewModel[0..1]#organizerDashboardActivity registrationViewModel;
+}
+
+class ParticipantDashboardActivity extends AppCompatActivity {
+  ref ParticipantViewModel[0..1]#participantDashboardActivity participantViewModel;
+}
+
+class ManageCategoriesActivity extends AppCompatActivity {
+  ref CategoryViewModel[0..1]#manageCategoriesActivity categoryViewModel;
+}
+
+class ManageEventActivity extends AppCompatActivity {
+  attr boolean isEditMode;
+  attr String organizerId;
+  attr String selectedCategoryId;
+  ref Event[1]#manageEventActivity eventToEdit;
+  ref Category[*] categoryList;
+  ref OrganizerViewModel[0..1]#manageEventActivity organizerViewModel;
+  ref CategoryViewModel[0..1]#manageEventActivity categoryViewModel;
+}
+
+class CreateAccountActivity extends AppCompatActivity {
+  ref RegistrationForm[1]#createAccountActivity registrationForm;
+}
+
+class LoginActivity extends AppCompatActivity {
+  ref LoginService[0..1]#loginActivity loginService;
+}
+
+class MainActivity extends AppCompatActivity {
+}

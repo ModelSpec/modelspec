@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="meetinggroups" nsURI="meetinggroups" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="UserAccess">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
+        eType="#//User" containment="true" eOpposite="#//User/userAccess"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="userRegistrations" upperBound="-1"
+        eType="#//UserRegistration" containment="true" eOpposite="#//UserRegistration/userAccess"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Administration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="administrators" upperBound="-1"
+        eType="#//Administrator" containment="true" eOpposite="#//Administrator/administration"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Meetings">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//Member" containment="true" eOpposite="#//Member/meetings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingGroupProposals"
+        upperBound="-1" eType="#//MeetingGroupProposal" containment="true" eOpposite="#//MeetingGroupProposal/meetings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingGroups" upperBound="-1"
+        eType="#//MeetingGroup" containment="true" eOpposite="#//MeetingGroup/meetings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" upperBound="-1"
+        eType="#//Meeting" containment="true" eOpposite="#//Meeting/meetings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingLocations" upperBound="-1"
+        eType="#//MeetingLocation" containment="true" eOpposite="#//MeetingLocation/meetings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingAttendees" upperBound="-1"
+        eType="#//MeetingAttendee" containment="true" eOpposite="#//MeetingAttendee/meetings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingNotAttendees" upperBound="-1"
+        eType="#//MeetingNotAttendee" containment="true" eOpposite="#//MeetingNotAttendee/meetings"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingWaitlistMembers"
+        upperBound="-1" eType="#//MeetingWaitlistMember" containment="true" eOpposite="#//MeetingWaitlistMember/meetings"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Payments">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingFees" upperBound="-1"
+        eType="#//MeetingFee" containment="true" eOpposite="#//MeetingFee/payments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingFeePayments" upperBound="-1"
+        eType="#//MeetingFeePayment" containment="true" eOpposite="#//MeetingFeePayment/payments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" upperBound="-1"
+        eType="#//Subscription" containment="true" eOpposite="#//Subscription/payments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptionPayments" upperBound="-1"
+        eType="#//SubscriptionPayment" containment="true" eOpposite="#//SubscriptionPayment/payments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptionRenewalPayments"
+        upperBound="-1" eType="#//SubscriptionRenewalPayment" containment="true" eOpposite="#//SubscriptionRenewalPayment/payments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="priceLists" upperBound="-1"
+        eType="#//PriceList" containment="true" eOpposite="#//PriceList/payments"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UserRegistration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="userAccess" lowerBound="1"
+        eType="#//UserAccess" eOpposite="#//UserAccess/userRegistrations"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="login" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="registerDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="confirmedDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//UserRegistrationStatus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="User">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="userAccess" lowerBound="1"
+        eType="#//UserAccess" eOpposite="#//UserAccess/users"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="login" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="createDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Administrator" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="administration" lowerBound="1"
+        eType="#//Administration" eOpposite="#//Administration/administrators"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Member" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" lowerBound="1"
+        eType="#//Meetings" eOpposite="#//Meetings/members"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingGroups" upperBound="-1"
+        eType="#//MeetingGroup" eOpposite="#//MeetingGroup/creator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingGroupProposals"
+        upperBound="-1" eType="#//MeetingGroupProposal" eOpposite="#//MeetingGroupProposal/member"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingGroupLocation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="city" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="countryCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingGroupProposal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="proposalDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//MeetingGroupProposalStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingGroupLocation" lowerBound="1"
+        eType="#//MeetingGroupLocation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="member" lowerBound="1"
+        eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="decisions" upperBound="-1"
+        eType="#//MeetingGroupProposalDecision" eOpposite="#//MeetingGroupProposalDecision/proposal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" lowerBound="1"
+        eType="#//Meetings" eOpposite="#//Meetings/meetingGroupProposals"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingGroupProposalDecision">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rejectReason" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="#//MeetingGroupProposalDecisionCode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="proposal" lowerBound="1"
+        eType="#//MeetingGroupProposal" eOpposite="#//MeetingGroupProposal/decisions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="administrator" lowerBound="1"
+        eType="#//Administrator"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingGroup">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="createDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paymentDateTo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingGroupLocation" lowerBound="1"
+        eType="#//MeetingGroupLocation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="creator" lowerBound="1"
+        eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//MeetingGroupMember" eOpposite="#//MeetingGroupMember/meetingGroup"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" lowerBound="1"
+        eType="#//Meetings" eOpposite="#//Meetings/meetingGroups"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingGroupMember">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="joinedDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isActive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" eType="#//MeetingGroupMemberRole"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="member" lowerBound="1"
+        eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingGroup" lowerBound="1"
+        eType="#//MeetingGroup" eOpposite="#//MeetingGroup/members"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingLocation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="address" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="city" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="countryCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" lowerBound="1"
+        eType="#//Meetings" eOpposite="#//Meetings/meetingLocations"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Term">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingTerm">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Meeting">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="createDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cancelDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isCanceled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="term" lowerBound="1" eType="#//MeetingTerm"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="location" lowerBound="1"
+        eType="#//MeetingLocation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rsvpTerm" lowerBound="1"
+        eType="#//Term" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="creator" lowerBound="1"
+        eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="changeMember" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cancelMember" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingAttendees" upperBound="-1"
+        eType="#//MeetingAttendee" eOpposite="#//MeetingAttendee/meeting"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingNotAttendees" upperBound="-1"
+        eType="#//MeetingNotAttendee" eOpposite="#//MeetingNotAttendee/meeting"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingWaitlistMembers"
+        upperBound="-1" eType="#//MeetingWaitlistMember" eOpposite="#//MeetingWaitlistMember/meeting"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingLimit" lowerBound="1"
+        eType="#//MeetingLimit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingFees" upperBound="-1"
+        eType="#//MeetingFee" eOpposite="#//MeetingFee/meeting"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" lowerBound="1"
+        eType="#//Meetings" eOpposite="#//Meetings/meetings"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingAttendee">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="guestNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isFeePaid" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRemoved" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="removingReason" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionChangeDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="removedDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" eType="#//MeetingAttendeeRole"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attendee" lowerBound="1"
+        eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fee" eType="#//MeetingFee"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="removingMember" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meeting" lowerBound="1"
+        eType="#//Meeting" eOpposite="#//Meeting/meetingAttendees"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" lowerBound="1"
+        eType="#//Meetings" eOpposite="#//Meetings/meetingAttendees"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingNotAttendee">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionChangeDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="member" lowerBound="1"
+        eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meeting" lowerBound="1"
+        eType="#//Meeting" eOpposite="#//Meeting/meetingNotAttendees"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" lowerBound="1"
+        eType="#//Meetings" eOpposite="#//Meetings/meetingNotAttendees"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingWaitlistMember">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionChanged" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="signUpDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="signOffDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="movedToAttendeesDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMovedToAttendees" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="member" lowerBound="1"
+        eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meeting" lowerBound="1"
+        eType="#//Meeting" eOpposite="#//Meeting/meetingWaitlistMembers"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetings" lowerBound="1"
+        eType="#//Meetings" eOpposite="#//Meetings/meetingWaitlistMembers"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingLimit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attendeesLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="guestsLimit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MoneyValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingFee">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//MeetingFeeStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payer" lowerBound="1" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meeting" lowerBound="1"
+        eType="#//Meeting" eOpposite="#//Meeting/meetingFees"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//MoneyValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingFeePayments" upperBound="-1"
+        eType="#//MeetingFeePayment" eOpposite="#//MeetingFeePayment/meetingFee"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payments" lowerBound="1"
+        eType="#//Payments" eOpposite="#//Payments/meetingFees"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MeetingFeePayment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//MeetingFeePaymentStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="meetingFee" lowerBound="1"
+        eType="#//MeetingFee" eOpposite="#//MeetingFee/meetingFeePayments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payments" lowerBound="1"
+        eType="#//Payments" eOpposite="#//Payments/meetingFeePayments"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Subscription">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="countryCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expirationDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subscriptionPeriod" eType="#//SubscriptionPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//SubscriptionStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriber" lowerBound="1"
+        eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payments" lowerBound="1"
+        eType="#//Payments" eOpposite="#//Payments/subscriptions"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubscriptionPayment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="countryCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subscriptionPeriod" eType="#//SubscriptionPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//SubscriptionPaymentStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payer" lowerBound="1" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//MoneyValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payments" lowerBound="1"
+        eType="#//Payments" eOpposite="#//Payments/subscriptionPayments"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubscriptionRenewalPayment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="countryCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subscriptionPeriod" eType="#//SubscriptionPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//SubscriptionRenewalPaymentStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payer" lowerBound="1" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="#//MoneyValue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payments" lowerBound="1"
+        eType="#//Payments" eOpposite="#//Payments/subscriptionRenewalPayments"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PriceListItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isActive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="countryCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subscriptionPeriod" eType="#//SubscriptionPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//PriceListItemCategory"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="price" lowerBound="1" eType="#//MoneyValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PriceList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pricingStrategy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="items" upperBound="-1"
+        eType="#//PriceListItem" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="payments" lowerBound="1"
+        eType="#//Payments" eOpposite="#//Payments/priceLists"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="UserRegistrationStatus">
+    <eLiterals name="WaitingForConfirmation"/>
+    <eLiterals name="Confirmed" value="1"/>
+    <eLiterals name="Expired" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MeetingGroupProposalStatus">
+    <eLiterals name="ToVerify"/>
+    <eLiterals name="Verified" value="1"/>
+    <eLiterals name="Rejected" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MeetingGroupProposalDecisionCode">
+    <eLiterals name="NoDecision"/>
+    <eLiterals name="Accept" value="1"/>
+    <eLiterals name="Reject" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MeetingGroupMemberRole">
+    <eLiterals name="Organizer"/>
+    <eLiterals name="Member" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MeetingAttendeeRole">
+    <eLiterals name="Host"/>
+    <eLiterals name="Attendee" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MeetingFeeStatus">
+    <eLiterals name="WaitingForPayment"/>
+    <eLiterals name="Paid" value="1"/>
+    <eLiterals name="Expired" value="2"/>
+    <eLiterals name="Canceled" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MeetingFeePaymentStatus">
+    <eLiterals name="WaitingForPayment"/>
+    <eLiterals name="Paid" value="1"/>
+    <eLiterals name="Expired" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SubscriptionPeriod">
+    <eLiterals name="Month"/>
+    <eLiterals name="HalfYear" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SubscriptionStatus">
+    <eLiterals name="Active"/>
+    <eLiterals name="Expired" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SubscriptionPaymentStatus">
+    <eLiterals name="WaitingForPayment"/>
+    <eLiterals name="Paid" value="1"/>
+    <eLiterals name="Expired" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SubscriptionRenewalPaymentStatus">
+    <eLiterals name="WaitingForPayment"/>
+    <eLiterals name="Paid" value="1"/>
+    <eLiterals name="Expired" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PriceListItemCategory">
+    <eLiterals name="New"/>
+    <eLiterals name="Renewal" value="1"/>
+  </eClassifiers>
+</ecore:EPackage>

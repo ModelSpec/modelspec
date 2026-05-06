@@ -1,0 +1,136 @@
+package Symboleo;
+
+class Contract {
+  attr String ~id;
+  val LegalPosition[2..*]#contract legalPositions;
+  val Role[2..*]#contract roles;
+  ref Party[2..*]#contract parties;
+  ref Asset[*]#contract assets;
+  ref Contract#subContracts parentContract;
+  ref Contract[*]#parentContract subContracts;
+  ref Power[*]#terminated terminators;
+  attr ContractStatus status = 0;
+  attr ContractStatusActive statusActive = 0;
+}
+
+class Party {
+  attr String ~id;
+  ref Contract[+]#parties contract;
+  ref Role[+]#party roles;
+  ref Asset[*]#owners assets;
+  ref LegalPosition[*]#performer performerOf;
+  ref LegalPosition[*]#liable liableOf;
+  ref LegalPosition[*]#rightHolder rightHolderOf;
+}
+
+class Role {
+  attr String ~id;
+  ref LegalPosition[*]#debtor debt;
+  ref LegalPosition[*]#creditor credit;
+  ref Party#roles party;
+  ref Contract[1]#roles contract;
+}
+
+class Asset {
+  attr String ~id;
+  ref Party[*]#assets owners;
+  ref LegalPosition[*]#asset legalPositions;
+  ref Contract[1]#assets contract;
+}
+
+abstract class LegalPosition {
+  attr String name;
+  ref Party[*]#performerOf performer;
+  ref Party[*]#liableOf liable;
+  ref Party[*]#rightHolderOf rightHolder;
+  ref LegalSituation[1]#antecedentOf antecedent;
+  ref LegalSituation[1]#consequentOf consequent;
+  ref LegalSituation trigger;
+  ref Contract[1]#legalPositions contract;
+  ref Role[1]#debt debtor;
+  ref Role[1]#credit creditor;
+  ref Asset#legalPositions asset;
+}
+
+class Situation {
+  ref Event[*]#postState preEvents;
+  ref Event[*]#preState postEvents;
+  ref TimeInterval[1] time;
+}
+
+class Event {
+  ref TimePoint[1] time;
+  ref Situation#preEvents postState;
+  ref Situation#postEvents preState;
+}
+
+class TimeInterval {
+  ref TimePoint[1] start;
+  ref TimePoint[1] end;
+}
+
+class TimePoint {
+}
+
+class LegalSituation extends Situation {
+  ref LegalPosition[*]#antecedent antecedentOf;
+  ref LegalPosition[*]#consequent consequentOf;
+}
+
+class Obligation extends LegalPosition {
+  attr boolean surviving;
+  attr ObligationStatus status = 0;
+  attr ObligationStatusActive statusActive = 0;
+}
+
+class Power extends LegalPosition {
+  ref Contract#terminators terminated;
+  ref LegalPosition[*] legalPositions;
+  attr PowerStatus status = 0;
+  attr PowerStatusActive statusActive = 0;
+}
+
+enum ContractStatus {
+  Form;
+  Active;
+  SuccessfulTermination;
+  UnsuccessfulTermination;
+}
+
+enum ContractStatusActive {
+  Null;
+  InEffect;
+  Suspension;
+  Unassign;
+  Rescission;
+}
+
+enum ObligationStatus {
+  Start;
+  Create;
+  Active;
+  Violation;
+  Discharge;
+  Fulfillment;
+  UnsuccessfulTermination;
+}
+
+enum ObligationStatusActive {
+  Null;
+  InEffect;
+  Suspension;
+}
+
+enum PowerStatus {
+  Start;
+  Create;
+  Active;
+  SuccessfulTermination;
+  UnsuccessfulTermination;
+}
+
+enum PowerStatusActive {
+  Null;
+  InEffect;
+  Suspension;
+}

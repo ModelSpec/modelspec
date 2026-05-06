@@ -1,0 +1,35 @@
+namespace ca.mcgill.ecse.btms.model;
+
+class BTMS {
+  1 <@>- * BusVehicle vehicles;
+  1 <@>- * Route routes;
+  1 <@>- * RouteAssignment assignments;
+  1 <@>- * Driver drivers;
+  1 <@>- * DriverSchedule schedules;
+}
+
+class BusVehicle {
+  unique String licencePlate;
+}
+
+class Route {
+  unique Integer number;
+}
+
+class RouteAssignment {
+  Date date;
+  * -- 1 BusVehicle bus;
+  * -- 1 Route route;
+}
+
+class Driver {
+  name;
+  autounique id;
+}
+
+class DriverSchedule {
+  enum Shift { Morning, Afternoon, Night }
+  Shift shift;
+  * -- 1 Driver driver;
+  * -- 1 RouteAssignment assignment;
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Facepage" nsURI="Facepage" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="Facepage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
+        eType="#//User" containment="true" eOpposite="#//User/facepage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="accounts" upperBound="-1"
+        eType="#//Account" containment="true" eOpposite="#//Account/facepage"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pages" upperBound="-1"
+        eType="#//Page" containment="true" eOpposite="#//Page/facepage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="User">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="birthDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="account" eType="#//Account"
+        eOpposite="#//Account/user"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="facepage" lowerBound="1"
+        eType="#//Facepage" eOpposite="#//Facepage/users"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Account" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="accountNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="user" lowerBound="1" eType="#//User"
+        eOpposite="#//User/account"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="facepage" lowerBound="1"
+        eType="#//Facepage" eOpposite="#//Facepage/accounts"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessAccount" eSuperTypes="#//Account">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="companyName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="advertisementPages" upperBound="-1"
+        eType="#//AdvertisementPage" eOpposite="#//AdvertisementPage/businessAccount"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PersonalAccount" eSuperTypes="#//Account">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="administrator" upperBound="-1"
+        eType="#//PersonalPage" eOpposite="#//PersonalPage/personalAccount"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="privileges" upperBound="-1"
+        eType="#//Privilege" eOpposite="#//Privilege/personalAccount"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="senderOf" upperBound="-1"
+        eType="#//FriendRequest" eOpposite="#//FriendRequest/sender"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiverOf" upperBound="-1"
+        eType="#//FriendRequest" eOpposite="#//FriendRequest/receiver"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FriendRequest">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
+        eType="#//PersonalAccount" eOpposite="#//PersonalAccount/senderOf"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" lowerBound="1"
+        eType="#//PersonalAccount" eOpposite="#//PersonalAccount/receiverOf"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Page" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pageName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visits" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="facepage" lowerBound="1"
+        eType="#//Facepage" eOpposite="#//Facepage/pages"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PersonalPage" eSuperTypes="#//Page">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="personalAccount" lowerBound="1"
+        eType="#//PersonalAccount" eOpposite="#//PersonalAccount/administrator"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="privileges" upperBound="-1"
+        eType="#//Privilege" eOpposite="#//Privilege/personalPage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdvertisementPage" eSuperTypes="#//Page">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bounceRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="clickThroughRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="conversionRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="businessAccount" lowerBound="1"
+        eType="#//BusinessAccount" eOpposite="#//BusinessAccount/advertisementPages"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Privilege">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeOfPrivilege" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="personalAccount" lowerBound="1"
+        eType="#//PersonalAccount" eOpposite="#//PersonalAccount/privileges"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="personalPage" lowerBound="1"
+        eType="#//PersonalPage" eOpposite="#//PersonalPage/privileges"/>
+  </eClassifiers>
+</ecore:EPackage>

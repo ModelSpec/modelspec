@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="cheecsemanager" nsURI="cheecsemanager" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="CheECSEManager">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="manager" eType="#//FacilityManager"
+        eOpposite="#//FacilityManager/cheECSEManager"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="farmers" upperBound="-1"
+        eType="#//Farmer" eOpposite="#//Farmer/cheECSEManager"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="shelves" upperBound="-1"
+        eType="#//Shelf" eOpposite="#//Shelf/cheECSEManager"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheeseWheels" upperBound="-1"
+        eType="#//CheeseWheel" eOpposite="#//CheeseWheel/cheECSEManager"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transactions" upperBound="-1"
+        eType="#//Transaction" eOpposite="#//Transaction/cheECSEManager"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="companies" upperBound="-1"
+        eType="#//WholesaleCompany" eOpposite="#//WholesaleCompany/cheECSEManager"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="robot" eType="#//Robot"
+        eOpposite="#//Robot/cheECSEManager"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="User" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FacilityManager" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheECSEManager" lowerBound="1"
+        eType="#//CheECSEManager" eOpposite="#//CheECSEManager/manager"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Farmer" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheECSEManager" lowerBound="1"
+        eType="#//CheECSEManager" eOpposite="#//CheECSEManager/farmers"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="address" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="purchases" upperBound="-1"
+        eType="#//Purchase" eOpposite="#//Purchase/farmer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WholesaleCompany">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheECSEManager" lowerBound="1"
+        eType="#//CheECSEManager" eOpposite="#//CheECSEManager/companies"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="address" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="orders" upperBound="-1"
+        eType="#//Order" eOpposite="#//Order/company"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Shelf">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="robot" eType="#//Robot"
+        eOpposite="#//Robot/currentShelf"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheECSEManager" lowerBound="1"
+        eType="#//CheECSEManager" eOpposite="#//CheECSEManager/shelves"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="locations" upperBound="-1"
+        eType="#//ShelfLocation" eOpposite="#//ShelfLocation/shelf"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ShelfLocation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheeseWheel" eType="#//CheeseWheel"
+        eOpposite="#//CheeseWheel/location"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="shelf" lowerBound="1" eType="#//Shelf"
+        eOpposite="#//Shelf/locations"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="column" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="row" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CheeseWheel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="robot" eType="#//Robot"
+        eOpposite="#//Robot/currentCheeseWheel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheECSEManager" lowerBound="1"
+        eType="#//CheECSEManager" eOpposite="#//CheECSEManager/cheeseWheels"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="monthsAged" eType="#//MaturationPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSpoiled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="purchase" lowerBound="1"
+        eType="#//Purchase" eOpposite="#//Purchase/cheeseWheels"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="location" eType="#//ShelfLocation"
+        eOpposite="#//ShelfLocation/cheeseWheel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="order" eType="#//Order"
+        eOpposite="#//Order/cheeseWheels"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transaction" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheECSEManager" lowerBound="1"
+        eType="#//CheECSEManager" eOpposite="#//CheECSEManager/transactions"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactionDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Purchase" eSuperTypes="#//Transaction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheeseWheels" upperBound="-1"
+        eType="#//CheeseWheel" eOpposite="#//CheeseWheel/purchase"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="farmer" lowerBound="1"
+        eType="#//Farmer" eOpposite="#//Farmer/purchases"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Order" eSuperTypes="#//Transaction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheeseWheels" upperBound="-1"
+        eType="#//CheeseWheel" eOpposite="#//CheeseWheel/order"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="company" lowerBound="1"
+        eType="#//WholesaleCompany" eOpposite="#//WholesaleCompany/orders"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nrCheeseWheels" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="monthsAged" eType="#//MaturationPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deliveryDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Robot">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cheECSEManager" lowerBound="1"
+        eType="#//CheECSEManager" eOpposite="#//CheECSEManager/robot"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isFacingAisle" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="currentShelf" eType="#//Shelf"
+        eOpposite="#//Shelf/robot"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="currentCheeseWheel" eType="#//CheeseWheel"
+        eOpposite="#//CheeseWheel/robot"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="log" upperBound="-1" eType="#//LogEntry"
+        eOpposite="#//LogEntry/robot"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogEntry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="robot" lowerBound="1" eType="#//Robot"
+        eOpposite="#//Robot/log"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MaturationPeriod">
+    <eLiterals name="Six"/>
+    <eLiterals name="Twelve" value="1"/>
+    <eLiterals name="TwentyFour" value="2"/>
+    <eLiterals name="ThirtySix" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOFarmer">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="address" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cheeseWheelIDs" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purchaseDates" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="monthsAgeds" unique="false"
+        upperBound="-1" eType="#//MaturationPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSpoileds" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOWholesaleCompany">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="address" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="orderDates" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="monthsAgeds" unique="false"
+        upperBound="-1" eType="#//MaturationPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nrCheeseWheelsOrdereds"
+        unique="false" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nrCheeseWheelsMissings"
+        unique="false" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deliveryDates" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOShelf">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shelfID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cheeseWheelIDs" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="columnNrs" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rowNrs" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="monthsAgeds" unique="false"
+        upperBound="-1" eType="#//MaturationPeriod"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOCheeseWheel">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="monthsAged" eType="#//MaturationPeriod"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSpoiled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purchaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shelfID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="column" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="row" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOrdered" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+</ecore:EPackage>

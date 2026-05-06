@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="AssetPlus" nsURI="AssetPlus" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="AssetPlus">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="employees" upperBound="-1"
+        eType="#//Employee" containment="true" eOpposite="#//Employee/assetPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guests" upperBound="-1"
+        eType="#//Guest" containment="true" eOpposite="#//Guest/assetPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="manager" eType="#//Manager"
+        containment="true" eOpposite="#//Manager/assetPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceTickets" upperBound="-1"
+        eType="#//MaintenanceTicket" containment="true" eOpposite="#//MaintenanceTicket/assetPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetTypes" upperBound="-1"
+        eType="#//AssetType" containment="true" eOpposite="#//AssetType/assetPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specificAssets" upperBound="-1"
+        eType="#//SpecificAsset" containment="true" eOpposite="#//SpecificAsset/assetPlus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="User" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phoneNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="raisedTickets" upperBound="-1"
+        eType="#//MaintenanceTicket" eOpposite="#//MaintenanceTicket/ticketRaiser"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HotelStaff" abstract="true" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceNotes" upperBound="-1"
+        eType="#//MaintenanceNote" eOpposite="#//MaintenanceNote/noteTaker"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceTasks" upperBound="-1"
+        eType="#//MaintenanceTicket" eOpposite="#//MaintenanceTicket/ticketFixer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Guest" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetPlus" lowerBound="1"
+        eType="#//AssetPlus" eOpposite="#//AssetPlus/guests"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Employee" eSuperTypes="#//HotelStaff">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetPlus" lowerBound="1"
+        eType="#//AssetPlus" eOpposite="#//AssetPlus/employees"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Manager" eSuperTypes="#//HotelStaff">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ticketsForApproval" upperBound="-1"
+        eType="#//MaintenanceTicket" eOpposite="#//MaintenanceTicket/fixApprover"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetPlus" lowerBound="1"
+        eType="#//AssetPlus" eOpposite="#//AssetPlus/manager"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MaintenanceTicket">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="raisedOnDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeToResolve" eType="#//TimeEstimate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="#//PriorityLevel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ticketRaiser" lowerBound="1"
+        eType="#//User" eOpposite="#//User/raisedTickets"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ticketFixer" eType="#//HotelStaff"
+        eOpposite="#//HotelStaff/maintenanceTasks"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fixApprover" eType="#//Manager"
+        eOpposite="#//Manager/ticketsForApproval"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ticketNotes" upperBound="-1"
+        eType="#//MaintenanceNote" containment="true" eOpposite="#//MaintenanceNote/ticket"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ticketImages" upperBound="-1"
+        eType="#//TicketImage" containment="true" eOpposite="#//TicketImage/ticket"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="asset" eType="#//SpecificAsset"
+        eOpposite="#//SpecificAsset/maintenanceTickets"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetPlus" lowerBound="1"
+        eType="#//AssetPlus" eOpposite="#//AssetPlus/maintenanceTickets"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MaintenanceNote">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="noteTaker" lowerBound="1"
+        eType="#//HotelStaff" eOpposite="#//HotelStaff/maintenanceNotes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ticket" lowerBound="1"
+        eType="#//MaintenanceTicket" eOpposite="#//MaintenanceTicket/ticketNotes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TicketImage">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ticket" lowerBound="1"
+        eType="#//MaintenanceTicket" eOpposite="#//MaintenanceTicket/ticketImages"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SpecificAsset">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assetNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="floorNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="roomNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purchaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="maintenanceTickets" upperBound="-1"
+        eType="#//MaintenanceTicket" eOpposite="#//MaintenanceTicket/asset"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetType" lowerBound="1"
+        eType="#//AssetType" eOpposite="#//AssetType/specificAssets"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetPlus" lowerBound="1"
+        eType="#//AssetPlus" eOpposite="#//AssetPlus/specificAssets"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AssetType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedLifeSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="image" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specificAssets" upperBound="-1"
+        eType="#//SpecificAsset" eOpposite="#//SpecificAsset/assetType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetPlus" lowerBound="1"
+        eType="#//AssetPlus" eOpposite="#//AssetPlus/assetTypes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOMaintenanceNote">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="noteTakerEmail" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOUser" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phoneNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ticketsRaised" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOGuest" eSuperTypes="#//TOUser"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TOHotelStaff" abstract="true" eSuperTypes="#//TOUser">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ticketFixed" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOEmployee" eSuperTypes="#//TOHotelStaff"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TOManager" eSuperTypes="#//TOHotelStaff">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ticketApproved" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOAssetType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedLifeSpan" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOSpecificAsset">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assetNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="floorNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="roomNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purchaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assetType" lowerBound="1"
+        eType="#//TOAssetType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TOMaintenanceTicket">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="raisedOnDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="raisedByEmail" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fixedByEmail" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeToResolve" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="approvalRequired" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assetName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedLifeSpanInDays"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="purchaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="floorNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="roomNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageURLs" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="noteDates" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="noteDescriptions" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="noteTakerEmails" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TimeEstimate">
+    <eLiterals name="lessThanADay"/>
+    <eLiterals name="oneToThreeDays" value="1"/>
+    <eLiterals name="threeToSevenDays" value="2"/>
+    <eLiterals name="oneToThreeWeeks" value="3"/>
+    <eLiterals name="threeOrMoreWeeks" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="PriorityLevel">
+    <eLiterals name="Urgent"/>
+    <eLiterals name="Normal" value="1"/>
+    <eLiterals name="Low" value="2"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,80 @@
+class Contract {
+  enum ContractStatus { Form, Active, SuccessfulTermination, UnsuccessfulTermination }
+  enum ContractStatusActive { Null, InEffect, Suspension, Unassign, Rescission }
+  unique String id;
+  1 <@>- 2..* LegalPosition legalPositions;
+  1 <@>- 2..* Role roles;
+  1..* -- 2..* Party parties;
+  1 -- 0..* Asset assets;
+  0..1 parentContract -- 0..* Contract subContracts;
+  0..1 terminated -- 0..* Power terminators;
+  defaulted ContractStatus status = ContractStatus.Form;
+  defaulted ContractStatusActive statusActive = ContractStatusActive.Null;
+}
+
+class Party {
+  unique String id;
+}
+
+class Role {
+  unique String id;
+  1 debtor -- 0..* LegalPosition debt;
+  1 creditor -- 0..* LegalPosition credit;
+  1..* roles -- 0..1 Party party;
+}
+
+class Asset {
+  unique String id;
+  * -- * Party owners;
+  0..1 -- 0..* LegalPosition legalPositions;
+}
+
+class LegalPosition {
+  unique String name;
+  * performerOf -- * Party performer;
+  * liableOf -- * Party liable;
+  * rightHolderOf -- * Party rightHolder;
+  0..* antecedentOf -- 1 LegalSituation antecedent;
+  0..* consequentOf -- 1 LegalSituation consequent;
+  0..1 -> 0..1 LegalSituation trigger;
+}
+
+class Situation {
+  0..1 postState -- 0..* Event preEvents;
+  0..1 preState -- 0..* Event postEvents;
+  0..1 -> 1 TimeInterval time;
+}
+
+class Event {
+  Boolean triggered;
+  TimePoint timestamp;
+}
+
+class TimeInterval {
+  0..1 -> 1 TimePoint start;
+  0..1 -> 1 TimePoint end;
+}
+
+class TimePoint { }
+
+class LegalSituation {
+  isA Situation;
+}
+
+class Obligation {
+  enum ObligationStatus { Start, Create, Active, Violation, Discharge, Fulfillment, UnsuccessfulTermination }
+  enum ObligationStatusActive { Null, InEffect, Suspension }
+  isA LegalPosition;
+  Boolean surviving;
+  defaulted ObligationStatus status = ObligationStatus.Start;
+  defaulted ObligationStatusActive statusActive = ObligationStatusActive.Null;
+}
+
+class Power {
+  enum PowerStatus { Start, Create, Active, SuccessfulTermination, UnsuccessfulTermination }
+  enum PowerStatusActive { Null, InEffect, Suspension }
+  isA LegalPosition;
+  0..1 -> 0..* LegalPosition;
+  defaulted PowerStatus status = PowerStatus.Start;
+  defaulted PowerStatusActive statusActive = PowerStatusActive.Null;
+}

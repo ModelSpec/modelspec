@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="biketourplus" nsURI="biketourplus" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="BikeTourPlus">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nrWeeks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priceOfGuidePerWeek" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="manager" eType="#//Manager"
+        containment="true" eOpposite="#//Manager/bikeTourPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guides" upperBound="-1"
+        eType="#//Guide" containment="true" eOpposite="#//Guide/bikeTourPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participants" upperBound="-1"
+        eType="#//Participant" containment="true" eOpposite="#//Participant/bikeTourPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bookedItems" upperBound="-1"
+        eType="#//BookedItem" containment="true" eOpposite="#//BookedItem/bikeTourPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="gear" upperBound="-1" eType="#//Gear"
+        containment="true" eOpposite="#//Gear/bikeTourPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="combos" upperBound="-1"
+        eType="#//Combo" containment="true" eOpposite="#//Combo/bikeTourPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="comboItems" upperBound="-1"
+        eType="#//ComboItem" containment="true" eOpposite="#//ComboItem/bikeTourPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lodges" upperBound="-1"
+        eType="#//Lodge" containment="true" eOpposite="#//Lodge/bikeTourPlus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTours" upperBound="-1"
+        eType="#//BikeTour" containment="true" eOpposite="#//BikeTour/bikeTourPlus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="User" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Manager" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/manager"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedUser" abstract="true" eSuperTypes="#//User">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="emergencyContact" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Guide" eSuperTypes="#//NamedUser">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTours" upperBound="-1"
+        eType="#//BikeTour" eOpposite="#//BikeTour/guide"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/guides"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Status">
+    <eLiterals name="NotAssigned"/>
+    <eLiterals name="Assigned" value="1"/>
+    <eLiterals name="Paid" value="2"/>
+    <eLiterals name="Started" value="3"/>
+    <eLiterals name="Finished" value="4"/>
+    <eLiterals name="Cancelled" value="5"/>
+    <eLiterals name="Banned" value="6"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Participant" eSuperTypes="#//NamedUser">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nrWeeks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weekAvailableFrom" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weekAvailableUntil" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lodgeRequired" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="authorizationCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="refundedPercentageAmount"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//Status"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTour" eType="#//BikeTour"
+        eOpposite="#//BikeTour/participants"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bookedItems" upperBound="-1"
+        eType="#//BookedItem" eOpposite="#//BookedItem/participant"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/participants"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BookedItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="quantity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participant" lowerBound="1"
+        eType="#//Participant" eOpposite="#//Participant/bookedItems"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="item" lowerBound="1" eType="#//BookableItem"
+        eOpposite="#//BookableItem/bookedItems"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/bookedItems"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BookableItem" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bookedItems" upperBound="-1"
+        eType="#//BookedItem" eOpposite="#//BookedItem/item"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Gear" eSuperTypes="#//BookableItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pricePerWeek" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="comboItems" upperBound="-1"
+        eType="#//ComboItem" eOpposite="#//ComboItem/gear"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/gear"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Combo" eSuperTypes="#//BookableItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="discount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="comboItems" lowerBound="2"
+        upperBound="-1" eType="#//ComboItem" eOpposite="#//ComboItem/combo"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/combos"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComboItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="quantity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="combo" lowerBound="1" eType="#//Combo"
+        eOpposite="#//Combo/comboItems"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="gear" lowerBound="1" eType="#//Gear"
+        eOpposite="#//Gear/comboItems"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/comboItems"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LodgeRating">
+    <eLiterals name="OneStar"/>
+    <eLiterals name="TwoStars" value="1"/>
+    <eLiterals name="ThreeStars" value="2"/>
+    <eLiterals name="FourStars" value="3"/>
+    <eLiterals name="FiveStars" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Lodge">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="address" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rating" eType="#//LodgeRating"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTours" upperBound="-1"
+        eType="#//BikeTour" eOpposite="#//BikeTour/lodge"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/lodges"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BikeTour">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startWeek" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endWeek" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participants" upperBound="-1"
+        eType="#//Participant" eOpposite="#//Participant/bikeTour"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guide" lowerBound="1" eType="#//Guide"
+        eOpposite="#//Guide/bikeTours"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lodge" eType="#//Lodge"
+        eOpposite="#//Lodge/bikeTours"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bikeTourPlus" lowerBound="1"
+        eType="#//BikeTourPlus" eOpposite="#//BikeTourPlus/bikeTours"/>
+  </eClassifiers>
+</ecore:EPackage>

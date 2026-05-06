@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="localLoop" nsURI="localLoop" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="Event">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="organizerId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="categoryId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fee" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventStart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventEnd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="capacity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="category" lowerBound="1"
+        eType="#//Category"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="registrations" upperBound="-1"
+        eType="#//Registration" eOpposite="#//Registration/event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizer" lowerBound="1"
+        eType="#//Organizer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventRepository" lowerBound="1"
+        eType="#//EventRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Category">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="categoryId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
+        eType="#//Event" eOpposite="#//Event/category"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categoryViewModel" lowerBound="1"
+        eType="#//CategoryViewModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Registration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="registrationId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="participantId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="organizerId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timestamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" lowerBound="1" eType="#//Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participant" lowerBound="1"
+        eType="#//Participant"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="registrationRepository"
+        lowerBound="1" eType="#//RegistrationRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RegistrationForm">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phone" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="confirmPassword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOrganizer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="companyName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="createAccountActivity"
+        lowerBound="1" eType="#//CreateAccountActivity" eOpposite="#//CreateAccountActivity/registrationForm"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UserAccount">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phoneNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="role" lowerBound="1" eType="#//Role"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="adminViewModel" lowerBound="1"
+        eType="#//AdminViewModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Role" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Admin" eSuperTypes="#//Role"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Organizer" eSuperTypes="#//Role">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="companyName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
+        eType="#//Event" eOpposite="#//Event/organizer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Participant" eSuperTypes="#//Role">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="registrations" upperBound="-1"
+        eType="#//Registration" eOpposite="#//Registration/participant"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EventRepository">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
+        eType="#//Event" eOpposite="#//Event/eventRepository"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizerViewModel" eType="#//OrganizerViewModel"
+        eOpposite="#//OrganizerViewModel/eventRepository"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RegistrationRepository">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="registrations" upperBound="-1"
+        eType="#//Registration" eOpposite="#//Registration/registrationRepository"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="registrationViewModel"
+        eType="#//RegistrationViewModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdminViewModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="userAccounts" upperBound="-1"
+        eType="#//UserAccount" eOpposite="#//UserAccount/adminViewModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="adminDashboardActivity"
+        lowerBound="1" eType="#//AdminDashboardActivity" eOpposite="#//AdminDashboardActivity/adminViewModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrganizerViewModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventRepo" lowerBound="1"
+        eType="#//EventRepository"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventRepository" lowerBound="1"
+        eType="#//EventRepository" eOpposite="#//EventRepository/organizerViewModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizerDashboardActivity"
+        lowerBound="1" eType="#//OrganizerDashboardActivity" eOpposite="#//OrganizerDashboardActivity/organizerViewModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="manageEventActivity" lowerBound="1"
+        eType="#//ManageEventActivity" eOpposite="#//ManageEventActivity/organizerViewModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RegistrationViewModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pendingRegistrations" upperBound="-1"
+        eType="#//Registration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="repository" lowerBound="1"
+        eType="#//RegistrationRepository" eOpposite="#//RegistrationRepository/registrationViewModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizerDashboardActivity"
+        lowerBound="1" eType="#//OrganizerDashboardActivity" eOpposite="#//OrganizerDashboardActivity/registrationViewModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParticipantViewModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participantDashboardActivity"
+        lowerBound="1" eType="#//ParticipantDashboardActivity" eOpposite="#//ParticipantDashboardActivity/participantViewModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CategoryViewModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
+        eType="#//Category" eOpposite="#//Category/categoryViewModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="manageCategoriesActivity"
+        lowerBound="1" eType="#//ManageCategoriesActivity" eOpposite="#//ManageCategoriesActivity/categoryViewModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="manageEventActivity" lowerBound="1"
+        eType="#//ManageEventActivity" eOpposite="#//ManageEventActivity/categoryViewModel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LoginService">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loginActivity" lowerBound="1"
+        eType="#//LoginActivity" eOpposite="#//LoginActivity/loginService"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AppCompatActivity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AdminDashboardActivity" eSuperTypes="#//AppCompatActivity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="adminViewModel" eType="#//AdminViewModel"
+        eOpposite="#//AdminViewModel/adminDashboardActivity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrganizerDashboardActivity" eSuperTypes="#//AppCompatActivity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizerViewModel" eType="#//OrganizerViewModel"
+        eOpposite="#//OrganizerViewModel/organizerDashboardActivity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="registrationViewModel"
+        eType="#//RegistrationViewModel" eOpposite="#//RegistrationViewModel/organizerDashboardActivity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ParticipantDashboardActivity" eSuperTypes="#//AppCompatActivity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participantViewModel" eType="#//ParticipantViewModel"
+        eOpposite="#//ParticipantViewModel/participantDashboardActivity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ManageCategoriesActivity" eSuperTypes="#//AppCompatActivity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categoryViewModel" eType="#//CategoryViewModel"
+        eOpposite="#//CategoryViewModel/manageCategoriesActivity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ManageEventActivity" eSuperTypes="#//AppCompatActivity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEditMode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="organizerId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="selectedCategoryId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventToEdit" lowerBound="1"
+        eType="#//Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categoryList" upperBound="-1"
+        eType="#//Category"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizerViewModel" eType="#//OrganizerViewModel"
+        eOpposite="#//OrganizerViewModel/manageEventActivity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categoryViewModel" eType="#//CategoryViewModel"
+        eOpposite="#//CategoryViewModel/manageEventActivity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CreateAccountActivity" eSuperTypes="#//AppCompatActivity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="registrationForm" lowerBound="1"
+        eType="#//RegistrationForm" eOpposite="#//RegistrationForm/createAccountActivity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LoginActivity" eSuperTypes="#//AppCompatActivity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loginService" eType="#//LoginService"
+        eOpposite="#//LoginService/loginActivity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MainActivity" eSuperTypes="#//AppCompatActivity"/>
+</ecore:EPackage>

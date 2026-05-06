@@ -1,0 +1,321 @@
+package meetinggroups;
+
+class UserAccess {
+  val User[*]#userAccess users;
+  val UserRegistration[*]#userAccess userRegistrations;
+}
+
+class Administration {
+  val Administrator[*]#administration administrators;
+}
+
+class Meetings {
+  val Member[*]#meetings members;
+  val MeetingGroupProposal[*]#meetings meetingGroupProposals;
+  val MeetingGroup[*]#meetings meetingGroups;
+  val Meeting[*]#meetings meetings;
+  val MeetingLocation[*]#meetings meetingLocations;
+  val MeetingAttendee[*]#meetings meetingAttendees;
+  val MeetingNotAttendee[*]#meetings meetingNotAttendees;
+  val MeetingWaitlistMember[*]#meetings meetingWaitlistMembers;
+}
+
+class Payments {
+  val MeetingFee[*]#payments meetingFees;
+  val MeetingFeePayment[*]#payments meetingFeePayments;
+  val Subscription[*]#payments subscriptions;
+  val SubscriptionPayment[*]#payments subscriptionPayments;
+  val SubscriptionRenewalPayment[*]#payments subscriptionRenewalPayments;
+  val PriceList[*]#payments priceLists;
+}
+
+class UserRegistration {
+  ref UserAccess[1]#userRegistrations userAccess;
+  attr int ~id;
+  attr String login;
+  attr String email;
+  attr String firstName;
+  attr String lastName;
+  attr String name;
+  attr EDate registerDate;
+  attr EDate confirmedDate;
+  attr UserRegistrationStatus status;
+}
+
+class User {
+  ref UserAccess[1]#users userAccess;
+  attr int ~id;
+  attr String login;
+  attr String email;
+  attr String firstName;
+  attr String lastName;
+  attr String name;
+  attr EDate createDate;
+}
+
+class Administrator extends User {
+  ref Administration[1]#administrators administration;
+}
+
+class Member extends User {
+  ref Meetings[1]#members meetings;
+  ref MeetingGroup[*]#creator meetingGroups;
+  ref MeetingGroupProposal[*]#member meetingGroupProposals;
+}
+
+class MeetingGroupLocation {
+  attr String city;
+  attr String countryCode;
+}
+
+class MeetingGroupProposal {
+  attr int ~id;
+  attr String name;
+  attr String description;
+  attr EDate proposalDate;
+  attr MeetingGroupProposalStatus status;
+  ref MeetingGroupLocation[1] meetingGroupLocation;
+  ref Member[1] member;
+  ref MeetingGroupProposalDecision[*]#proposal decisions;
+  ref Meetings[1]#meetingGroupProposals meetings;
+}
+
+class MeetingGroupProposalDecision {
+  attr String rejectReason;
+  attr EDate date;
+  attr MeetingGroupProposalDecisionCode code;
+  ref MeetingGroupProposal[1]#decisions proposal;
+  ref Administrator[1] administrator;
+}
+
+class MeetingGroup {
+  attr int ~id;
+  attr String name;
+  attr String description;
+  attr EDate createDate;
+  attr EDate paymentDateTo;
+  ref MeetingGroupLocation[1] meetingGroupLocation;
+  ref Member[1] creator;
+  ref MeetingGroupMember[*]#meetingGroup members;
+  ref Meetings[1]#meetingGroups meetings;
+}
+
+class MeetingGroupMember {
+  attr EDate joinedDate;
+  attr boolean isActive;
+  attr MeetingGroupMemberRole role;
+  ref Member[1] member;
+  ref MeetingGroup[1]#members meetingGroup;
+}
+
+class MeetingLocation {
+  attr String name;
+  attr String address;
+  attr String city;
+  attr String countryCode;
+  ref Meetings[1]#meetingLocations meetings;
+}
+
+class Term {
+  attr EDate startDate;
+  attr EDate endDate;
+}
+
+class MeetingTerm {
+  attr EDate startDate;
+  attr EDate endDate;
+}
+
+class Meeting {
+  attr int ~id;
+  attr String title;
+  attr String description;
+  attr EDate createDate;
+  attr EDate changeDate;
+  attr EDate cancelDate;
+  attr boolean isCanceled;
+  val MeetingTerm[1] term;
+  ref MeetingLocation[1] location;
+  val Term[1] rsvpTerm;
+  ref Member[1] creator;
+  ref Member[0..1] changeMember;
+  ref Member[0..1] cancelMember;
+  ref MeetingAttendee[*]#meeting meetingAttendees;
+  ref MeetingNotAttendee[*]#meeting meetingNotAttendees;
+  ref MeetingWaitlistMember[*]#meeting meetingWaitlistMembers;
+  ref MeetingLimit[1] meetingLimit;
+  ref MeetingFee[*]#meeting meetingFees;
+  ref Meetings[1]#meetings meetings;
+}
+
+class MeetingAttendee {
+  attr int guestNumber;
+  attr boolean decisionChanged;
+  attr boolean isFeePaid;
+  attr boolean isRemoved;
+  attr String removingReason;
+  attr EDate decisionDate;
+  attr EDate decisionChangeDate;
+  attr EDate removedDate;
+  attr MeetingAttendeeRole role;
+  ref Member[1] attendee;
+  ref MeetingFee[0..1] fee;
+  ref Member[0..1] removingMember;
+  ref Meeting[1]#meetingAttendees meeting;
+  ref Meetings[1]#meetingAttendees meetings;
+}
+
+class MeetingNotAttendee {
+  attr boolean decisionChanged;
+  attr EDate decisionDate;
+  attr EDate decisionChangeDate;
+  ref Member[1] member;
+  ref Meeting[1]#meetingNotAttendees meeting;
+  ref Meetings[1]#meetingNotAttendees meetings;
+}
+
+class MeetingWaitlistMember {
+  attr boolean decisionChanged;
+  attr EDate decisionDate;
+  attr EDate signUpDate;
+  attr EDate signOffDate;
+  attr EDate movedToAttendeesDate;
+  attr boolean isMovedToAttendees;
+  ref Member[1] member;
+  ref Meeting[1]#meetingWaitlistMembers meeting;
+  ref Meetings[1]#meetingWaitlistMembers meetings;
+}
+
+class MeetingLimit {
+  attr int attendeesLimit;
+  attr int guestsLimit;
+}
+
+class MoneyValue {
+  attr EDouble value;
+  attr String currency;
+}
+
+class MeetingFee {
+  attr MeetingFeeStatus status;
+  ref Member[1] payer;
+  ref Meeting[1]#meetingFees meeting;
+  val MoneyValue[1] value;
+  ref MeetingFeePayment[*]#meetingFee meetingFeePayments;
+  ref Payments[1]#meetingFees payments;
+}
+
+class MeetingFeePayment {
+  attr MeetingFeePaymentStatus status;
+  ref MeetingFee[1]#meetingFeePayments meetingFee;
+  ref Payments[1]#meetingFeePayments payments;
+}
+
+class Subscription {
+  attr String countryCode;
+  attr EDate expirationDate;
+  attr SubscriptionPeriod subscriptionPeriod;
+  attr SubscriptionStatus status;
+  ref Member[1] subscriber;
+  ref Payments[1]#subscriptions payments;
+}
+
+class SubscriptionPayment {
+  attr String countryCode;
+  attr SubscriptionPeriod subscriptionPeriod;
+  attr SubscriptionPaymentStatus status;
+  ref Member[1] payer;
+  val MoneyValue[1] value;
+  ref Payments[1]#subscriptionPayments payments;
+}
+
+class SubscriptionRenewalPayment {
+  attr String countryCode;
+  attr SubscriptionPeriod subscriptionPeriod;
+  attr SubscriptionRenewalPaymentStatus status;
+  ref Member[1] payer;
+  val MoneyValue[1] value;
+  ref Payments[1]#subscriptionRenewalPayments payments;
+}
+
+class PriceListItem {
+  attr boolean isActive;
+  attr String countryCode;
+  attr SubscriptionPeriod subscriptionPeriod;
+  attr PriceListItemCategory category;
+  val MoneyValue[1] price;
+}
+
+class PriceList {
+  attr String pricingStrategy;
+  val PriceListItem[*] items;
+  ref Payments[1]#priceLists payments;
+}
+
+enum UserRegistrationStatus {
+  WaitingForConfirmation;
+  Confirmed;
+  Expired;
+}
+
+enum MeetingGroupProposalStatus {
+  ToVerify;
+  Verified;
+  Rejected;
+}
+
+enum MeetingGroupProposalDecisionCode {
+  NoDecision;
+  Accept;
+  Reject;
+}
+
+enum MeetingGroupMemberRole {
+  Organizer;
+  Member;
+}
+
+enum MeetingAttendeeRole {
+  Host;
+  Attendee;
+}
+
+enum MeetingFeeStatus {
+  WaitingForPayment;
+  Paid;
+  Expired;
+  Canceled;
+}
+
+enum MeetingFeePaymentStatus {
+  WaitingForPayment;
+  Paid;
+  Expired;
+}
+
+enum SubscriptionPeriod {
+  Month;
+  HalfYear;
+}
+
+enum SubscriptionStatus {
+  Active;
+  Expired;
+}
+
+enum SubscriptionPaymentStatus {
+  WaitingForPayment;
+  Paid;
+  Expired;
+}
+
+enum SubscriptionRenewalPaymentStatus {
+  WaitingForPayment;
+  Paid;
+  Expired;
+}
+
+enum PriceListItemCategory {
+  New;
+  Renewal;
+}

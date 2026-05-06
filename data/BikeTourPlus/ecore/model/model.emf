@@ -1,0 +1,116 @@
+package biketourplus;
+
+class BikeTourPlus {
+  attr EDate startDate;
+  attr int nrWeeks;
+  attr int priceOfGuidePerWeek;
+  val Manager[0..1]#bikeTourPlus manager;
+  val Guide[*]#bikeTourPlus guides;
+  val Participant[*]#bikeTourPlus participants;
+  val BookedItem[*]#bikeTourPlus bookedItems;
+  val Gear[*]#bikeTourPlus gear;
+  val Combo[*]#bikeTourPlus combos;
+  val ComboItem[*]#bikeTourPlus comboItems;
+  val Lodge[*]#bikeTourPlus lodges;
+  val BikeTour[*]#bikeTourPlus bikeTours;
+}
+
+abstract class User {
+  unique attr String email;
+  attr String password;
+}
+
+class Manager extends User {
+  ref BikeTourPlus[1]#manager bikeTourPlus;
+}
+
+abstract class NamedUser extends User {
+  attr String name;
+  attr String emergencyContact;
+}
+
+class Guide extends NamedUser {
+  ref BikeTour[*]#guide bikeTours;
+  ref BikeTourPlus[1]#guides bikeTourPlus;
+}
+
+enum Status {
+  NotAssigned;
+  Assigned;
+  Paid;
+  Started;
+  Finished;
+  Cancelled;
+  Banned;
+}
+
+class Participant extends NamedUser {
+  attr int nrWeeks;
+  attr int weekAvailableFrom;
+  attr int weekAvailableUntil;
+  attr boolean lodgeRequired;
+  attr String authorizationCode;
+  attr int refundedPercentageAmount;
+  attr Status status;
+  ref BikeTour[0..1]#participants bikeTour;
+  ref BookedItem[*]#participant bookedItems;
+  ref BikeTourPlus[1]#participants bikeTourPlus;
+}
+
+class BookedItem {
+  attr int quantity;
+  ref Participant[1]#bookedItems participant;
+  ref BookableItem[1]#bookedItems item;
+  ref BikeTourPlus[1]#bookedItems bikeTourPlus;
+}
+
+abstract class BookableItem {
+  unique attr String name;
+  ref BookedItem[*]#item bookedItems;
+}
+
+class Gear extends BookableItem {
+  attr int pricePerWeek;
+  ref ComboItem[*]#gear comboItems;
+  ref BikeTourPlus[1]#gear bikeTourPlus;
+}
+
+class Combo extends BookableItem {
+  attr int discount;
+  ref ComboItem[2..*]#combo comboItems;
+  ref BikeTourPlus[1]#combos bikeTourPlus;
+}
+
+class ComboItem {
+  attr int quantity;
+  ref Combo[1]#comboItems combo;
+  ref Gear[1]#comboItems gear;
+  ref BikeTourPlus[1]#comboItems bikeTourPlus;
+}
+
+
+enum LodgeRating {
+  OneStar;
+  TwoStars;
+  ThreeStars;
+  FourStars;
+  FiveStars;
+}
+
+class Lodge {
+  unique attr String name;
+  attr String address;
+  attr LodgeRating rating;
+  ref BikeTour[*]#lodge bikeTours;
+  ref BikeTourPlus[1]#lodges bikeTourPlus;
+}
+
+class BikeTour {
+  attr int ~id;
+  attr int startWeek;
+  attr int endWeek;
+  ref Participant[*]#bikeTour participants;
+  ref Guide[1]#bikeTours guide;
+  ref Lodge[0..1]#bikeTours lodge;
+  ref BikeTourPlus[1]#bikeTours bikeTourPlus;
+}

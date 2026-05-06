@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="BusTransportationManagementSystem" nsURI="BusTransportationManagementSystem"
+    nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="BTMS">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vehicles" upperBound="-1"
+        eType="#//BusVehicle" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="routes" upperBound="-1"
+        eType="#//Route" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assignments" upperBound="-1"
+        eType="#//RouteAssignment" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="drivers" upperBound="-1"
+        eType="#//Driver" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schedules" upperBound="-1"
+        eType="#//DriverSchedule" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusVehicle">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="licencePlate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="routeAssignments" upperBound="-1"
+        eType="#//RouteAssignment" eOpposite="#//RouteAssignment/bus"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Route">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="number" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="routeAssignments" upperBound="-1"
+        eType="#//RouteAssignment" eOpposite="#//RouteAssignment/route"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RouteAssignment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bus" lowerBound="1" eType="#//BusVehicle"
+        eOpposite="#//BusVehicle/routeAssignments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="route" lowerBound="1" eType="#//Route"
+        eOpposite="#//Route/routeAssignments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="driverSchedules" upperBound="-1"
+        eType="#//DriverSchedule" eOpposite="#//DriverSchedule/assignment"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Driver">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="driverSchedules" upperBound="-1"
+        eType="#//DriverSchedule" eOpposite="#//DriverSchedule/driver"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DriverSchedule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shift" eType="#//Shift"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="driver" lowerBound="1"
+        eType="#//Driver" eOpposite="#//Driver/driverSchedules"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assignment" lowerBound="1"
+        eType="#//RouteAssignment" eOpposite="#//RouteAssignment/driverSchedules"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Shift">
+    <eLiterals name="Morning"/>
+    <eLiterals name="Afternoon" value="1"/>
+    <eLiterals name="Night" value="2"/>
+  </eClassifiers>
+</ecore:EPackage>

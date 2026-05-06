@@ -1,0 +1,156 @@
+package AssetPlus;
+
+class AssetPlus {
+	val Employee[*]#assetPlus employees;
+	val Guest[*]#assetPlus guests;
+	val Manager[0..1]#assetPlus manager;
+	val MaintenanceTicket[*]#assetPlus maintenanceTickets;
+	val AssetType[*]#assetPlus assetTypes;
+	val SpecificAsset[*]#assetPlus specificAssets;
+}
+
+abstract class User {
+	unique attr String email;
+	attr String name;
+	attr String password;
+	attr String phoneNumber;
+	ref MaintenanceTicket[*]#ticketRaiser raisedTickets;
+}
+
+abstract class HotelStaff extends User {
+	ref MaintenanceNote[*]#noteTaker maintenanceNotes;
+	ref MaintenanceTicket[*]#ticketFixer maintenanceTasks;
+}
+
+class Guest extends User {
+	ref AssetPlus[1]#guests assetPlus;
+}
+
+class Employee extends HotelStaff {
+	ref AssetPlus[1]#employees assetPlus;
+}
+
+class Manager extends HotelStaff {
+  ref MaintenanceTicket[*]#fixApprover ticketsForApproval;
+  ref AssetPlus[1]#manager assetPlus;
+}
+
+class MaintenanceTicket {
+	unique attr int ~id;
+	attr EDate raisedOnDate;
+	attr String description;
+	attr TimeEstimate timeToResolve;
+	attr PriorityLevel priority;
+	ref User[1]#raisedTickets ticketRaiser;
+	ref HotelStaff[0..1]#maintenanceTasks ticketFixer;
+	ref Manager[0..1]#ticketsForApproval fixApprover;
+	val MaintenanceNote[*]#ticket ticketNotes;
+	val TicketImage[*]#ticket ticketImages;
+	ref SpecificAsset[0..1]#maintenanceTickets asset;
+	ref AssetPlus[1]#maintenanceTickets assetPlus;
+}
+
+class MaintenanceNote {
+	attr EDate date;
+	attr String description;
+	ref HotelStaff[1]#maintenanceNotes noteTaker;
+	ref MaintenanceTicket[1]#ticketNotes ticket;
+}
+
+class TicketImage {
+	attr String imageURL;
+	ref MaintenanceTicket[1]#ticketImages ticket;
+}
+
+class SpecificAsset {
+	unique attr int assetNumber;
+	attr int floorNumber;
+	attr int roomNumber;
+	attr EDate purchaseDate;
+	ref MaintenanceTicket[*]#asset maintenanceTickets;
+	ref AssetType[1]#specificAssets assetType;
+	ref AssetPlus[1]#specificAssets assetPlus;
+}
+
+class AssetType {
+	unique attr String name;
+	attr int expectedLifeSpan;
+	attr String image;
+	ref SpecificAsset[*]#assetType specificAssets;
+	ref AssetPlus[1]#assetTypes assetPlus;
+}
+
+class TOMaintenanceNote {
+	attr EDate date;
+	attr String description;
+	attr String noteTakerEmail;
+}
+
+abstract class TOUser {
+	attr String email;
+	attr String name;
+	attr String password;
+	attr String phoneNumber;
+	attr int[*] ticketsRaised;
+}
+
+class TOGuest extends TOUser {}
+
+abstract class TOHotelStaff extends TOUser {
+	attr int[*] ticketFixed;
+}
+
+class TOEmployee extends TOHotelStaff {}
+
+class TOManager extends TOHotelStaff {
+	attr int[*] ticketApproved;
+}
+
+class TOAssetType {
+	attr String name;
+	attr int expectedLifeSpan;
+	attr String imageURL;
+}
+
+class TOSpecificAsset {
+	attr int assetNumber;
+	attr int floorNumber;
+	attr int roomNumber;
+	attr EDate purchaseDate;
+	ref TOAssetType[1] assetType;
+}
+
+class TOMaintenanceTicket {
+	attr int ~id;
+	attr EDate raisedOnDate;
+	attr String description;
+	attr String raisedByEmail;
+	attr String status;
+	attr String fixedByEmail;
+	attr String timeToResolve;
+	attr String priority;
+	attr boolean approvalRequired;
+	attr String assetName;
+	attr int expectedLifeSpanInDays;
+	attr EDate purchaseDate;
+	attr int floorNumber;
+	attr int roomNumber;
+	attr String[*] imageURLs;
+	attr EDate[*] noteDates;
+	attr String[*] noteDescriptions;
+	attr String[*] noteTakerEmails;
+}
+
+enum TimeEstimate {
+	lessThanADay;
+	oneToThreeDays;
+	threeToSevenDays;
+	oneToThreeWeeks;
+	threeOrMoreWeeks;
+}
+
+enum PriorityLevel {
+	Urgent;
+	Normal;
+	Low;
+}

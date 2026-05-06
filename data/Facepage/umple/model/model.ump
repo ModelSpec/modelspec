@@ -1,0 +1,71 @@
+class Facepage {
+  1 <@>- * User users;
+  1 <@>- * Account accounts;
+  1 <@>- * Page pages;
+}
+
+class User {
+  unique int userID;
+  String name;
+  String email;
+  Date birthDate;
+}
+
+class Account {
+  abstract;
+  int accountNumber;
+}
+
+class BusinessAccount {
+  isA Account;
+  String companyName;
+}
+
+class PersonalAccount {
+  isA Account;
+}
+
+class FriendRequest {}
+
+class Page {
+  abstract;
+  String pageName;
+  int visits;
+}
+
+class PersonalPage {
+  isA Page;
+}
+
+associationClass Privilege {
+  String typeOfPrivilege;
+  * PersonalAccount;
+  * PersonalPage;
+}
+
+class AdvertisementPage {
+  isA Page;
+  double bounceRate;
+  double clickThroughRate;
+  double conversionRate;
+}
+
+association {
+  1 User -- 0..1 Account;
+}
+
+association {
+  1 BusinessAccount -- * AdvertisementPage;
+}
+
+association {
+  1 PersonalAccount -- * PersonalPage administrator;
+}
+
+association {
+  * FriendRequest senderOf -- 1 PersonalAccount sender;
+}
+
+association {
+  * FriendRequest receiverOf -- 1 PersonalAccount receiver;
+}

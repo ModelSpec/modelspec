@@ -1,0 +1,240 @@
+class UserAccess {
+  1 <@>- * User;
+  1 <@>- * UserRegistration;
+}
+
+class Administration {
+  1 <@>- * Administrator;
+}
+
+class Meetings {
+  1 <@>- * Member;
+  1 <@>- * MeetingGroupProposal;
+  1 <@>- * MeetingGroup;
+  1 <@>- * Meeting;
+  1 <@>- * MeetingLocation;
+  1 <@>- * MeetingAttendee;
+  1 <@>- * MeetingNotAttendee;
+  1 <@>- * MeetingWaitlistMember;
+}
+
+class Payments {
+  1 <@>- * MeetingFee;
+  1 <@>- * MeetingFeePayment;
+  1 <@>- * Subscription;
+  1 <@>- * SubscriptionPayment;
+  1 <@>- * SubscriptionRenewalPayment;
+  1 <@>- * PriceList;
+}
+
+class UserRegistration {
+  enum UserRegistrationStatus { WaitingForConfirmation, Confirmed, Expired }
+  autounique id;
+  String login;
+  String email;
+  String firstName;
+  String lastName;
+  lazy String name;
+  lazy immutable Date registerDate;
+  lazy immutable Date confirmedDate;
+  lazy UserRegistrationStatus status;
+}
+
+class User {
+  unique int id;
+  String login;
+  String email;
+  String firstName;
+  String lastName;
+  String name;
+  lazy Date createDate;
+}
+
+class Administrator {
+  isA User;
+}
+
+class Member {
+  isA User;
+}
+
+class MeetingGroupLocation {
+  String city;
+  String countryCode;
+}
+
+class MeetingGroupProposal {
+  enum MeetingGroupProposalStatus { ToVerify, Verified, Rejected }
+  autounique id;
+  String name;
+  String description;
+  lazy immutable Date proposalDate;
+  lazy MeetingGroupProposalStatus status;
+  1 -> 1 MeetingGroupLocation;
+  * -- 1 Member;
+}
+
+class MeetingGroupProposalDecision {
+  enum MeetingGroupProposalDecisionCode { NoDecision, Accept, Reject }
+  String rejectReason;
+  lazy Date date;
+  MeetingGroupProposalDecisionCode code;
+  * decisions -- 1 MeetingGroupProposal proposal;
+  * -> 1 Administrator;
+}
+
+class MeetingGroup {
+  unique int id;
+  String name;
+  String description;
+  lazy Date createDate;
+  lazy Date paymentDateTo;
+  1 -> 1 MeetingGroupLocation;
+  * -- 1 Member creator;
+  1 -- * MeetingGroupMember members;
+}
+
+class MeetingGroupMember {
+  enum MeetingGroupMemberRole { Organizer, Member }
+  lazy Date joinedDate;
+  lazy bool isActive;
+  MeetingGroupMemberRole role;
+  * -> 1 Member;
+}
+
+class MeetingLocation {
+  String name;
+  String address;
+  String city;
+  String countryCode;
+}
+
+class Term {
+  Date startDate;
+  Date endDate;
+}
+
+class MeetingTerm {
+  Date startDate;
+  Date endDate;
+}
+
+class Meeting {
+  autounique id;
+  String title;
+  String description;
+  lazy Date createDate;
+  lazy Date changeDate;
+  lazy Date cancelDate;
+  lazy bool isCanceled;
+  1 -> 1 MeetingTerm term;
+  1 -> 1 MeetingLocation location;
+  1 -> 1 MeetingLimit meetingLimit;
+  1 -> 1 Term rsvpTerm;
+  * -> 1 Member creator;
+  * -> 0..1 Member changeMember;
+  * -> 0..1 Member cancelMember;
+}
+
+class MeetingAttendee {
+  enum MeetingAttendeeRole { Host, Attendee }
+  int guestNumber;
+  lazy bool decisionChanged;
+  lazy bool isFeePaid;
+  lazy bool isRemoved;
+  lazy String removingReason;
+  Date decisionDate;
+  lazy Date decisionChangeDate;
+  lazy Date removedDate;
+  MeetingAttendeeRole role;
+  * -> 1 Member attendee;
+  1 -> 0..1 MeetingFee fee;
+  * -> 0..1 Member removingMember;
+  * -- 1 Meeting;
+}
+
+class MeetingNotAttendee {
+  lazy bool decisionChanged;
+  Date decisionDate;
+  lazy Date decisionChangeDate;
+  * -> 1 Member;
+  * -- 1 Meeting;
+}
+
+class MeetingWaitlistMember {
+  lazy bool decisionChanged;
+  Date decisionDate;
+  lazy Date signUpDate;
+  lazy Date signOffDate;
+  lazy Date movedToAttendeesDate;
+  lazy bool isMovedToAttendees;
+  * -> 1 Member;
+  * -- 1 Meeting;
+}
+
+class MeetingLimit {
+  int attendeesLimit;
+  int guestsLimit;
+}
+
+class MoneyValue {
+  double value;
+  String currency;
+}
+
+class MeetingFee {
+  enum MeetingFeeStatus { WaitingForPayment, Paid, Expired, Canceled }
+  lazy MeetingFeeStatus status;
+  * -> 1 Member payer;
+  * -- 1 Meeting;
+  1 -> 1 MoneyValue value;
+}
+
+class MeetingFeePayment {
+  enum MeetingFeePaymentStatus { WaitingForPayment, Paid, Expired }
+  lazy MeetingFeePaymentStatus status;
+  * --1 MeetingFee;
+}
+
+enum SubscriptionPeriod { Month, HalfYear }
+
+class Subscription {
+  enum SubscriptionStatus { Active, Expired }
+  String countryCode;
+  Date expirationDate;
+  SubscriptionPeriod subscriptionPeriod;
+  SubscriptionStatus status;
+  1 -> 1 Member subscriber;
+}
+
+class SubscriptionPayment {
+  enum SubscriptionPaymentStatus { WaitingForPayment, Paid, Expired }
+  String countryCode;
+  SubscriptionPeriod subscriptionPeriod;
+  lazy SubscriptionPaymentStatus status;
+  * -> 1 Member payer;
+  1 -> 1 MoneyValue value;
+}
+
+class SubscriptionRenewalPayment {
+  enum SubscriptionRenewalPaymentStatus { WaitingForPayment, Paid, Expired }
+  String countryCode;
+  SubscriptionPeriod subscriptionPeriod;
+  lazy SubscriptionRenewalPaymentStatus status;
+  * -> 1 Member payer;
+  1 -> 1 MoneyValue value;
+}
+
+class PriceListItem {
+  enum PriceListItemCategory { New, Renewal }
+  bool isActive;
+  String countryCode;
+  SubscriptionPeriod subscriptionPeriod;
+  PriceListItemCategory category;
+  1 -> 1 MoneyValue price;
+}
+
+class PriceList {
+  String pricingStrategy;
+  1 <@>- * PriceListItem;
+}

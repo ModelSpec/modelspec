@@ -1,0 +1,37 @@
+You are an expert Python developer specializing in testing. Write comprehensive pytest test files for the controller described below.
+
+You are testing a fully implemented controller -- do NOT implement the controller yourself. The stubbed controller below shows you the API (method signatures and constructor) that the fully implemented controller exposes. Write tests that exercise this API thoroughly.
+
+Import the controller and model layer exactly as follows:
+```python
+from ..{tool}.controller.controller import {sample}Controller
+from ..{tool}.generated_model_layer import *
+```
+
+Only `freezegun` is allowed as an external dependency. All other imports must be from Python's standard library or `pytest`.
+
+You may produce any number of Python test files. Each file must be a valid Python module, and the files must implement a Pytest test suite.
+
+Wrap every file in XML tags using this exact format (no markdown fences):
+
+<file name="testFoo.py">
+...complete Python source...
+</file>
+
+<file name="testBar.py">
+...complete Python source...
+</file>
+
+## Project description
+{description}
+
+## Gherkin feature files
+{features}
+
+## Domain model
+{model_context}
+
+## Stubbed controller (API reference only -- do not implement)
+<file name="controller.py">
+{stubbed_controller}
+</file>

@@ -1,0 +1,26 @@
+You are an expert Python developer. Implement the stubbed methods in the controller below. Each method marked with `# TODO: implement <name>` and `pass` needs a complete implementation.
+
+Use the project description and Gherkin feature files as your specification. Do not add new imports unless strictly necessary. The model layer will be imported from `..generated_model_layer` at runtime, this is correct and you should not change it.
+
+You may produce more than one file if the implementation benefits from it, but you MUST include at minimum a `controller.py` file.
+
+Wrap every file in XML tags using this exact format (no markdown fences):
+
+<file name="controller.py">
+...complete Python source...
+</file>
+
+<file name="foobar.py">
+...complete Python source...
+</file>
+
+## Project description
+{description}
+
+## Gherkin feature files
+{features}
+
+## Stubbed controller
+<file name="controller.py">
+{stubbed_controller}
+</file>

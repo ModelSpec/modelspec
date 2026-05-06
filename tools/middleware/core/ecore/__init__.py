@@ -1,0 +1,1 @@
+from .ecore_middleware import EcoreMiddleware

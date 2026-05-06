@@ -1,0 +1,139 @@
+package cheecsemanager;
+
+class CheECSEManager {
+  ref FacilityManager[0..1]#cheECSEManager manager;
+  ref Farmer[*]#cheECSEManager farmers;
+  ref Shelf[*]#cheECSEManager shelves;
+  ref CheeseWheel[*]#cheECSEManager cheeseWheels;
+  ref Transaction[*]#cheECSEManager transactions;
+  ref WholesaleCompany[*]#cheECSEManager companies;
+  ref Robot[0..1]#cheECSEManager robot;
+}
+
+abstract class User {
+  id attr String email;
+  attr String password;
+}
+
+class FacilityManager extends User {
+  ref CheECSEManager[1]#manager cheECSEManager;
+}
+
+class Farmer extends User {
+  ref CheECSEManager[1]#farmers cheECSEManager;
+  attr String name;
+  attr String address;
+  ref Purchase[*]#farmer purchases;
+}
+
+class WholesaleCompany {
+  ref CheECSEManager[1]#companies cheECSEManager;
+  attr String name;
+  attr String address;
+  ref Order[*]#company orders;
+}
+
+class Shelf {
+  ref Robot[0..1]#currentShelf robot;
+  ref CheECSEManager[1]#shelves cheECSEManager;
+  id attr String ~id;
+  ref ShelfLocation[*]#shelf locations;
+}
+
+class ShelfLocation {
+  ref CheeseWheel[0..1]#location cheeseWheel;
+  ref Shelf[1]#locations shelf;
+  id attr int ~id;
+  attr int column;
+  attr int row;
+}
+
+class CheeseWheel {
+  ref Robot[0..1]#currentCheeseWheel robot;
+  ref CheECSEManager[1]#cheeseWheels cheECSEManager;
+  id attr int ~id;
+  attr MaturationPeriod monthsAged;
+  attr boolean isSpoiled;
+  ref Purchase[1]#cheeseWheels purchase;
+  ref ShelfLocation[0..1]#cheeseWheel location;
+  ref Order[0..1]#cheeseWheels order;
+}
+
+abstract class Transaction {
+  ref CheECSEManager[1]#transactions cheECSEManager;
+  id attr int ~id;
+  attr EDate transactionDate;
+}
+
+class Purchase extends Transaction {
+  ref CheeseWheel[*]#purchase cheeseWheels;
+  ref Farmer[1]#purchases farmer;
+}
+
+class Order extends Transaction {
+  ref CheeseWheel[*]#order cheeseWheels;
+  ref WholesaleCompany[1]#orders company;
+  attr int nrCheeseWheels;
+  attr MaturationPeriod monthsAged;
+  attr EDate deliveryDate;
+}
+
+class Robot {
+  ref CheECSEManager[1]#robot cheECSEManager;
+  attr boolean isFacingAisle;
+  ref Shelf[0..1]#robot currentShelf;
+  ref CheeseWheel[0..1]#robot currentCheeseWheel;
+  ref LogEntry[*]#robot log;
+}
+
+class LogEntry {
+  ref Robot[1]#log robot;
+  attr String description;
+}
+
+enum MaturationPeriod {
+  Six;
+  Twelve;
+  TwentyFour;
+  ThirtySix;
+}
+
+class TOFarmer {
+    attr String email;
+    attr String password;
+    attr String name;
+    attr String address;
+    !unique attr int[*] cheeseWheelIDs;
+    !unique attr EDate[*] purchaseDates;
+    !unique attr MaturationPeriod[*] monthsAgeds;
+    !unique attr boolean[*] isSpoileds;
+}
+
+class TOWholesaleCompany {
+    attr String name;
+    attr String address;
+    !unique attr EDate[*] orderDates;
+    !unique attr MaturationPeriod[*] monthsAgeds;
+    !unique attr int[*] nrCheeseWheelsOrdereds;
+    !unique attr int[*] nrCheeseWheelsMissings;
+    !unique attr EDate[*] deliveryDates;
+}
+
+class TOShelf {
+    attr String shelfID;
+    !unique attr int[*] cheeseWheelIDs;
+    !unique attr int[*] columnNrs;
+    !unique attr int[*] rowNrs;
+    !unique attr MaturationPeriod[*] monthsAgeds;
+}
+
+class TOCheeseWheel {
+    attr int ~id;
+    attr MaturationPeriod monthsAged;
+    attr boolean isSpoiled;
+    attr EDate purchaseDate;
+    attr String shelfID;
+    attr int column;
+    attr int row;
+    attr boolean isOrdered;
+}

@@ -1,0 +1,63 @@
+package Facepage;
+
+class Facepage {
+  val User[*]#facepage users;
+  val Account[*]#facepage accounts;
+  val Page[*]#facepage pages;
+}
+
+class User {
+  unique attr int userID;
+  attr String name;
+  attr String email;
+  attr EDate birthDate;
+  ref Account[0..1]#user account;
+  ref Facepage[1]#users facepage;
+}
+
+abstract class Account {
+  attr int accountNumber;
+  ref User[1]#account user;
+  ref Facepage[1]#accounts facepage;
+}
+
+class BusinessAccount extends Account {
+  attr String companyName;
+  ref AdvertisementPage[*]#businessAccount advertisementPages;
+}
+
+class PersonalAccount extends Account {
+  ref PersonalPage[*]#personalAccount administrator;
+  ref Privilege[*]#personalAccount privileges;
+  ref FriendRequest[*]#sender senderOf;
+  ref FriendRequest[*]#receiver receiverOf;
+}
+
+class FriendRequest {
+  ref PersonalAccount[1]#senderOf sender;
+  ref PersonalAccount[1]#receiverOf receiver;
+}
+
+abstract class Page {
+  attr String pageName;
+  attr int visits;
+  ref Facepage[1]#pages facepage;
+}
+
+class PersonalPage extends Page {
+  ref PersonalAccount[1]#administrator personalAccount;
+  ref Privilege[*]#personalPage privileges;
+}
+
+class AdvertisementPage extends Page {
+  attr double bounceRate;
+  attr double clickThroughRate;
+  attr double conversionRate;
+  ref BusinessAccount[1]#advertisementPages businessAccount;
+}
+
+class Privilege {
+  attr String typeOfPrivilege;
+  ref PersonalAccount[1]#privileges personalAccount;
+  ref PersonalPage[1]#privileges personalPage;
+}

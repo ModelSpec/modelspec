@@ -1,0 +1,1 @@
+from .umple_middleware import UmpleMiddleware
